@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Images & binary assets — keep locally, don't push to repo
+public/img/
+src/assets/*.png
+src/assets/*.jpg
+src/assets/*.jpeg
+src/assets/*.webp
+src/assets/*.gif
