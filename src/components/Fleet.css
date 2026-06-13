@@ -1,0 +1,573 @@
+.fleet-section {
+  padding: 90px 0;
+  background: var(--bg-section-alt);
+  overflow: hidden;
+}
+
+/* ── Carousel ── */
+.fleet-carousel-outer {
+  width: 100%;
+  margin-top: 40px;
+  position: relative;
+}
+
+/* Scrollable track */
+.fleet-scroll-track {
+  display: flex;
+  gap: 22px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  padding: 12px 80px;          /* side padding so cards don't sit under buttons */
+  cursor: grab;
+}
+
+.fleet-scroll-track::-webkit-scrollbar { display: none; }
+.fleet-scroll-track:active { cursor: grabbing; }
+
+.fleet-scroll-item {
+  flex: 0 0 280px;
+  width: 280px;
+}
+
+/* Edge fades */
+.fleet-fade {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.fleet-fade--left {
+  left: 0;
+  background: linear-gradient(to right, var(--bg-section-alt) 0%, transparent 100%);
+}
+
+.fleet-fade--right {
+  right: 0;
+  background: linear-gradient(to left, var(--bg-section-alt) 0%, transparent 100%);
+}
+
+/* ── Nav Buttons ── */
+.fleet-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid rgba(124, 58, 237, 0.45);
+  background: rgba(124, 58, 237, 0.12);
+  color: var(--primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: background 0.25s, border-color 0.25s, transform 0.2s, box-shadow 0.25s, color 0.25s;
+}
+
+.fleet-nav-btn svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.fleet-nav-btn--left  { left: 16px; }
+.fleet-nav-btn--right { right: 16px; }
+
+.fleet-nav-btn:hover {
+  background: var(--grad-primary);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 6px 24px rgba(124, 58, 237, 0.5);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.fleet-nav-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+/* Dark mode refinement */
+[data-theme='dark'] .fleet-nav-btn {
+  background: rgba(124, 58, 237, 0.18);
+  border-color: rgba(124, 58, 237, 0.5);
+}
+
+[data-theme='dark'] .fleet-fade--left {
+  background: linear-gradient(to right, #1a0545 0%, transparent 100%);
+}
+
+[data-theme='dark'] .fleet-fade--right {
+  background: linear-gradient(to left, #1a0545 0%, transparent 100%);
+}
+
+@media (max-width: 768px) {
+  .fleet-scroll-track { padding: 10px 56px; }
+  .fleet-nav-btn { width: 42px; height: 42px; }
+  .fleet-nav-btn svg { width: 17px; height: 17px; }
+  .fleet-nav-btn--left  { left: 8px; }
+  .fleet-nav-btn--right { right: 8px; }
+}
+
+@media (max-width: 560px) {
+  .fleet-scroll-track { padding: 8px 48px; gap: 14px; }
+  .fleet-scroll-item  { flex: 0 0 240px; width: 240px; }
+  .fleet-nav-btn { width: 36px; height: 36px; }
+  .fleet-nav-btn svg { width: 15px; height: 15px; }
+}
+
+.fleet-card {
+  background: var(--bg-card);
+  border-radius: 22px;
+  border: 1.5px solid var(--border-color);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: all 0.35s ease;
+  box-shadow: 0 2px 12px var(--shadow-color);
+}
+
+.fleet-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--grad-primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+
+.fleet-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 40px rgba(124,58,237,0.2);
+  border-color: rgba(124,58,237,0.4);
+}
+
+.fleet-card:hover::before {
+  transform: scaleX(1);
+}
+
+.fleet-tag {
+  color: var(--white);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  background: var(--grad-primary);
+}
+
+.fleet-img-wrap {
+  width: 100%;
+  height: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.fleet-car-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.45s ease;
+  display: block;
+}
+
+.fleet-card:hover .fleet-car-img {
+  transform: scale(1.08);
+}
+
+.fleet-img-fallback {
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.fleet-emoji-fb {
+  font-size: 72px;
+}
+
+.fleet-info {
+  padding: 0 20px 16px;
+  flex: 1;
+}
+
+.fleet-info h3 {
+  font-size: 18px;
+  color: var(--dark);
+  margin-bottom: 4px;
+}
+
+.fleet-model {
+  font-size: 12px;
+  color: var(--gray);
+  margin-bottom: 14px;
+}
+
+.fleet-specs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.spec {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--dark);
+  font-weight: 500;
+  background: var(--primary-light);
+  padding: 4px 10px;
+  border-radius: 8px;
+  color: var(--primary);
+}
+
+.fleet-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.fleet-feature-badge {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent-dark);
+  background: var(--accent-light);
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+
+.fleet-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-top: 1px solid var(--border-color);
+  background: var(--primary-light);
+}
+
+.fleet-price {
+  display: flex;
+  flex-direction: column;
+}
+
+.price-value {
+  font-size: 18px;
+  font-weight: 800;
+  background: var(--grad-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.price-note {
+  font-size: 11px;
+  color: var(--gray);
+}
+
+.fleet-btn {
+  font-size: 13px;
+  padding: 9px 18px;
+}
+
+@media (max-width: 768px) {
+  .fleet-section { padding: 60px 0; }
+}
+
+@media (max-width: 560px) {
+  .fleet-section { padding: 48px 0; }
+}
+
+/* ══════════════════════════════════════
+   FARE LIST — themed to project design
+   ══════════════════════════════════════ */
+.fare-section {
+  margin-top: 72px;
+  padding-top: 8px;
+}
+
+/* ── Card ── */
+.fare-card {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-color);
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  position: relative;
+  transition: box-shadow 0.35s, border-color 0.35s;
+}
+
+.fare-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--grad-primary);
+  border-radius: 22px 22px 0 0;
+}
+
+/* ── Tab Bar ── */
+.fare-tabs {
+  display: flex;
+  background: var(--bg-section-alt);
+  padding: 8px;
+  gap: 6px;
+  border-bottom: 1.5px solid var(--border-color);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.fare-tabs::-webkit-scrollbar { display: none; }
+
+.fare-tab {
+  flex: 1;
+  min-width: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 11px 18px;
+  border: none;
+  background: transparent;
+  border-radius: 11px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background 0.22s, color 0.22s, box-shadow 0.22s, transform 0.18s;
+  white-space: nowrap;
+  font-family: 'Poppins', system-ui, sans-serif;
+}
+
+.fare-tab-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.fare-tab--active {
+  background: var(--bg-card);
+  color: var(--primary);
+  box-shadow: 0 2px 12px var(--shadow-color);
+}
+
+.fare-tab:hover:not(.fare-tab--active) {
+  color: var(--primary);
+  background: var(--primary-light);
+  transform: translateY(-1px);
+}
+
+/* ── Table ── */
+.fare-table-wrap {
+  overflow-x: auto;
+}
+
+.fare-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.fare-table thead tr {
+  border-bottom: 1.5px solid var(--border-color);
+}
+
+.fare-table th {
+  padding: 18px 28px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-secondary);
+}
+
+.fare-table th:nth-child(2),
+.fare-table th:nth-child(3) {
+  text-align: center;
+}
+
+.fare-table tbody tr {
+  border-bottom: 1px solid var(--border-color);
+  transition: background 0.18s;
+}
+
+.fare-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.fare-table tbody tr:hover {
+  background: var(--primary-light);
+}
+
+.fare-table td {
+  padding: 16px 28px;
+  vertical-align: middle;
+}
+
+.fare-table td:nth-child(2),
+.fare-table td:nth-child(3) {
+  text-align: center;
+}
+
+.fare-car-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.3px;
+}
+
+/* Seating pill */
+.fare-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  padding: 4px 12px;
+  background: var(--primary-light);
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 20px;
+  border: 1px solid rgba(124,58,237,0.2);
+}
+
+/* Rate — gradient text like .price-value */
+.fare-rate {
+  font-size: 15px;
+  font-weight: 800;
+  background: var(--grad-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Notes ── */
+.fare-notes {
+  margin: 0 20px 20px;
+  background: var(--highlight-light);
+  border-radius: 14px;
+  padding: 16px 20px;
+  border: 1px solid rgba(249,115,22,0.2);
+}
+
+[data-theme='dark'] .fare-notes {
+  background: rgba(249,115,22,0.08);
+  border-color: rgba(249,115,22,0.2);
+}
+
+.fare-notes-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+/* Coloured dot matching project's .feature-dot style */
+.fare-notes-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--highlight);
+  box-shadow: 0 0 0 3px rgba(249,115,22,0.18);
+}
+
+.fare-notes-header strong {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.fare-notes ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.fare-notes ul li {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  padding-left: 16px;
+  position: relative;
+}
+
+.fare-notes ul li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--highlight);
+  font-weight: 700;
+}
+
+/* ── Dark mode overrides ── */
+[data-theme='dark'] .fare-card {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(124,58,237,0.22);
+}
+
+[data-theme='dark'] .fare-tabs {
+  background: rgba(124,58,237,0.10);
+  border-color: rgba(124,58,237,0.2);
+}
+
+[data-theme='dark'] .fare-tab--active {
+  background: rgba(255,255,255,0.07);
+  box-shadow: 0 2px 12px rgba(124,58,237,0.25);
+}
+
+[data-theme='dark'] .fare-table thead tr {
+  border-color: rgba(124,58,237,0.2);
+}
+
+[data-theme='dark'] .fare-table tbody tr {
+  border-color: rgba(124,58,237,0.12);
+}
+
+[data-theme='dark'] .fare-table tbody tr:hover {
+  background: rgba(124,58,237,0.10);
+}
+
+[data-theme='dark'] .fare-badge {
+  background: rgba(124,58,237,0.20);
+  border-color: rgba(124,58,237,0.3);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .fare-section { margin-top: 56px; }
+  .fare-tab { font-size: 13px; padding: 9px 14px; min-width: 76px; }
+  .fare-tab-icon { display: none; }
+  .fare-table th,
+  .fare-table td { padding: 13px 16px; }
+}
+
+@media (max-width: 480px) {
+  .fare-section { margin-top: 40px; }
+  .fare-tabs { padding: 6px; gap: 4px; }
+  .fare-tab { font-size: 12px; padding: 8px 10px; min-width: 64px; }
+  .fare-table th,
+  .fare-table td { padding: 11px 12px; font-size: 12px; }
+  .fare-notes { margin: 0 12px 14px; padding: 14px 14px; }
+}

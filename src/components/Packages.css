@@ -1,0 +1,213 @@
+.packages-section {
+  padding: 90px 0;
+  background: var(--bg-section-alt);
+}
+
+.packages-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  margin-bottom: 48px;
+}
+
+.pkg-card {
+  background: var(--bg-card);
+  border-radius: 22px;
+  border: 1.5px solid var(--border-color);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.35s;
+  box-shadow: 0 2px 12px var(--shadow-color);
+  position: relative;
+}
+
+.pkg-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--grad-primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s;
+}
+
+.pkg-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 40px rgba(124,58,237,0.2);
+  border-color: rgba(124,58,237,0.4);
+}
+
+.pkg-card:hover::before {
+  transform: scaleX(1);
+}
+
+.pkg-header {
+  position: relative;
+  padding: 28px 24px 16px;
+  background: linear-gradient(135deg, #f5f3ff, #ede9fe);
+  text-align: center;
+}
+
+.pkg-emoji {
+  font-size: 62px;
+  display: block;
+  transition: transform 0.35s;
+  filter: drop-shadow(0 4px 8px rgba(124,58,237,0.25));
+}
+
+.pkg-card:hover .pkg-emoji {
+  transform: scale(1.15) rotate(-6deg);
+}
+
+.pkg-tag {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: var(--grad-primary);
+  color: var(--white);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 5px 12px;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(124,58,237,0.35);
+}
+
+.pkg-body {
+  padding: 18px 20px;
+  flex: 1;
+}
+
+.pkg-body h3 {
+  font-size: 17px;
+  color: var(--dark);
+  margin-bottom: 8px;
+}
+
+.pkg-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--gray);
+  font-weight: 500;
+  margin-bottom: 14px;
+}
+
+.pkg-highlights {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pkg-highlights li {
+  font-size: 12px;
+  color: var(--dark);
+  font-weight: 500;
+}
+
+.pkg-highlights li::before {
+  content: '✦ ';
+  color: var(--primary);
+  font-size: 10px;
+}
+
+.pkg-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-top: 1px solid #e2d9f8;
+  background: var(--primary-light);
+}
+
+.pkg-price {
+  display: flex;
+  flex-direction: column;
+}
+
+.price-from {
+  font-size: 10px;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.price-val {
+  font-size: 18px;
+  font-weight: 800;
+  background: var(--grad-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+.price-per {
+  font-size: 10px;
+  color: var(--gray);
+}
+
+.pkg-btn {
+  font-size: 13px;
+  padding: 9px 16px;
+}
+
+/* CTA Banner */
+.packages-cta {
+  text-align: center;
+  padding: 36px;
+  background: linear-gradient(135deg, #0e0b1e, #1a0545, #0c1a3a);
+  border-radius: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  border: 1px solid rgba(124,58,237,0.3);
+  box-shadow: 0 8px 32px rgba(124,58,237,0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.packages-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 50%, rgba(124,58,237,0.2) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 50%, rgba(6,182,212,0.12) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.packages-cta p {
+  color: rgba(255,255,255,0.8);
+  font-size: 16px;
+  font-weight: 500;
+  position: relative;
+  z-index: 1;
+}
+
+.packages-cta .btn-primary {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 1200px) {
+  .packages-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .packages-section { padding: 60px 0; }
+}
+
+@media (max-width: 600px) {
+  .packages-section { padding: 48px 0; }
+  .packages-grid { grid-template-columns: 1fr; gap: 16px; }
+  .packages-cta { flex-direction: column; text-align: center; padding: 24px 20px; }
+}

@@ -1,0 +1,426 @@
+﻿/* ── Ticker Bar ── */
+.ticker-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1001;
+  height: 34px;
+  background: linear-gradient(90deg, #1a0a3c 0%, #2d1060 50%, #1a0a3c 100%);
+  border-bottom: 1px solid rgba(245,197,24,0.35);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+/* Fade edges */
+.ticker-bar::before,
+.ticker-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+  z-index: 2;
+  pointer-events: none;
+}
+.ticker-bar::before {
+  left: 0;
+  background: linear-gradient(90deg, #1a0a3c, transparent);
+}
+.ticker-bar::after {
+  right: 0;
+  background: linear-gradient(270deg, #1a0a3c, transparent);
+}
+
+.ticker-track {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* The scrolling list — 4 copies = seamless loop */
+.ticker-list {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  /* animation scrolls exactly 25% (= 1 copy) then resets invisibly */
+  animation: ticker-scroll 40s linear infinite;
+  will-change: transform;
+}
+
+.ticker-bar:hover .ticker-list {
+  animation-play-state: paused;
+}
+
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #f5c518;
+  letter-spacing: 0.4px;
+  padding: 0 6px;
+}
+
+.ticker-sep {
+  margin: 0 14px;
+  color: rgba(245,197,24,0.45);
+  font-size: 10px;
+}
+
+/* Moves exactly 1/4 of total width (= 1 copy), then jumps back to start invisibly */
+@keyframes ticker-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-25%); }
+}
+
+/* ── Navbar (shifted down by ticker height) ── */
+.navbar {
+  position: fixed;
+  top: 34px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 10px 0;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(124,58,237,0.15);
+  transition: all 0.35s ease;
+}
+
+.navbar.scrolled {
+  padding: 7px 0;
+  background: rgba(255,255,255,0.98);
+  box-shadow: 0 4px 32px rgba(124,58,237,0.12);
+  border-bottom-color: rgba(124,58,237,0.25);
+}
+
+[data-theme='dark'] .navbar {
+  background: rgba(14,11,30,0.85);
+  border-bottom-color: rgba(124,58,237,0.18);
+}
+
+[data-theme='dark'] .navbar.scrolled {
+  background: rgba(14,11,30,0.97);
+  box-shadow: 0 4px 32px rgba(124,58,237,0.25);
+  border-bottom-color: rgba(124,58,237,0.35);
+}
+
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-width: 0;
+}
+
+/* ── Logo ── */
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+.rk-logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rk-logo-svg {
+  width: 72px;
+  height: 42px;
+  flex-shrink: 0;
+}
+
+.rk-logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.rk-logo-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--white);
+  white-space: nowrap;
+  letter-spacing: 0.2px;
+  background: var(--grad-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.rk-logo-tag {
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--text-muted);
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+}
+
+[data-theme='dark'] .rk-logo-tag {
+  color: rgba(255,255,255,0.45);
+}
+
+/* ── Desktop Nav Links ── */
+.navbar-links {
+  display: flex;
+  list-style: none;
+  gap: 4px;
+}
+
+.navbar-links a {
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 13px;
+  border-radius: 8px;
+  transition: all 0.2s;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  position: relative;
+}
+
+[data-theme='dark'] .navbar-links a {
+  color: rgba(255,255,255,0.75);
+}
+
+.navbar-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 60%;
+  height: 2px;
+  background: var(--grad-primary);
+  border-radius: 2px;
+  transition: transform 0.25s ease;
+}
+
+.navbar-links a:hover {
+  color: var(--accent);
+  background: rgba(124,58,237,0.12);
+}
+
+.navbar-links a:hover::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+/* ── Right Side ── */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.navbar-phone {
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+
+[data-theme='dark'] .navbar-phone {
+  color: rgba(255,255,255,0.8);
+}
+
+.navbar-phone:hover {
+  color: var(--accent);
+}
+
+.navbar-cta {
+  font-size: 14px;
+  padding: 10px 20px;
+  white-space: nowrap;
+}
+
+/* ── Hamburger ── */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 6px 4px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--text-primary);
+  border-radius: 2px;
+  transition: all 0.3s;
+  transform-origin: center;
+}
+
+[data-theme='dark'] .hamburger span {
+  background: var(--white);
+}
+
+.hamburger.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+  background: var(--primary);
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+  background: var(--primary);
+}
+
+/* ── Mobile Menu ── */
+.mobile-menu {
+  display: none;
+  background: var(--bg-section);
+  border-top: 1px solid var(--border-color);
+  padding: 0 20px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.3s ease;
+}
+
+[data-theme='dark'] .mobile-menu {
+  background: var(--dark2);
+  border-top-color: rgba(124,58,237,0.15);
+}
+
+.mobile-menu.open {
+  max-height: 500px;
+  padding: 16px 20px 24px;
+}
+
+.mobile-menu ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mobile-menu a {
+  display: block;
+  color: var(--text-secondary);
+  font-size: 15px;
+  font-weight: 500;
+  padding: 10px 12px;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+[data-theme='dark'] .mobile-menu a {
+  color: rgba(255,255,255,0.8);
+}
+
+.mobile-menu a:hover {
+  color: var(--accent);
+  background: rgba(124,58,237,0.12);
+}
+
+.mobile-menu .btn-primary {
+  margin-top: 8px;
+  text-align: center;
+  justify-content: center;
+}
+
+/* ── Theme Toggle ── */
+.theme-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.theme-toggle-track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 52px;
+  height: 28px;
+  background: rgba(124,58,237,0.25);
+  border: 1.5px solid rgba(124,58,237,0.4);
+  border-radius: 14px;
+  transition: background 0.3s, border-color 0.3s;
+  overflow: hidden;
+}
+
+[data-theme='light'] .theme-toggle-track {
+  background: rgba(250,220,50,0.2);
+  border-color: rgba(245,197,24,0.5);
+}
+
+.theme-toggle-thumb {
+  position: absolute;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--grad-primary);
+  transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  z-index: 1;
+}
+
+[data-theme='light'] .theme-toggle-thumb {
+  transform: translateX(24px);
+  background: linear-gradient(135deg, #f5c518, #f97316);
+}
+
+.theme-icon {
+  position: absolute;
+  font-size: 13px;
+  line-height: 1;
+  transition: opacity 0.25s;
+  pointer-events: none;
+}
+
+.theme-icon-sun  { right: 5px; opacity: 0; }
+.theme-icon-moon { left: 5px;  opacity: 1; }
+
+[data-theme='light'] .theme-icon-sun  { opacity: 1; }
+[data-theme='light'] .theme-icon-moon { opacity: 0; }
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .navbar-links { display: none; }
+  .navbar-phone { display: none; }
+  .hamburger { display: flex; }
+  .mobile-menu { display: block; }
+}
+
+@media (max-width: 600px) {
+  .navbar { padding: 8px 0; }
+  .navbar.scrolled { padding: 6px 0; }
+  .rk-logo-svg { width: 56px; height: 34px; }
+  .rk-logo-name { font-size: 13px; }
+  .rk-logo-tag { font-size: 9px; }
+}
+
+@media (max-width: 480px) {
+  .navbar-cta { display: none; }
+  .mobile-menu a { font-size: 14px; }
+}
+
+@media (max-width: 360px) {
+  .rk-logo-svg { width: 46px; height: 28px; }
+  .rk-logo-name { font-size: 11px; }
+  .rk-logo-tag { display: none; }
+}
